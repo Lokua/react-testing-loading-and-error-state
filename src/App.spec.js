@@ -8,28 +8,15 @@ jest.mock('./api', () => ({
   getData: jest.fn(
     () =>
       new Promise((resolve) => {
-        setTimeout(() => {
-          resolve('Data')
-        }, 100)
+        resolve('Data')
       })
   ),
 }))
 
 describe('App', () => {
-  const TIMEOUT_DURATION = 100
-
-  beforeEach(() => {
-    jest.useFakeTimers()
-  })
-
-  afterEach(() => {
-    jest.useRealTimers()
-  })
-
   it('should show loading state while data is being fetched', async () => {
     render(<App />)
     expect(screen.getByText('Loading')).toBeInTheDocument()
-    jest.advanceTimersByTime(TIMEOUT_DURATION)
     expect(await screen.findByText('Data')).toBeInTheDocument()
   })
 
@@ -37,14 +24,11 @@ describe('App', () => {
     getData.mockImplementationOnce(
       () =>
         new Promise((resolve, reject) => {
-          setTimeout(() => {
-            reject(new Error())
-          }, 100)
+          reject(new Error())
         })
     )
     render(<App />)
     expect(screen.getByText('Loading')).toBeInTheDocument()
-    jest.advanceTimersByTime(TIMEOUT_DURATION)
     expect(await screen.findByText('Error')).toBeInTheDocument()
   })
 })
