@@ -34,12 +34,7 @@ describe('App', () => {
   })
 
   it('should show error when API fails', async () => {
-    api.mockImplementationOnce(
-      () =>
-        new Promise((resolve, reject) => {
-          reject(new Error())
-        })
-    )
+    api.mockImplementationOnce(() => Promise.reject(new Error()))
     render(<App />)
     expect(screen.getByText('Loading')).toBeInTheDocument()
     expect(await screen.findByText('Error')).toBeInTheDocument()

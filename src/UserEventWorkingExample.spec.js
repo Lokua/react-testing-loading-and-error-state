@@ -11,6 +11,8 @@ const api = () =>
     // timeouts and promises use different queues etc.
     // this fact has made tests relying on timeouts and even worse mock timeout mechanisms extremely
     // difficult to maintain
+    // ----
+    // but anyway, this is how you need to mock your api client calls
     setTimeout(() => {
       resolve('Data')
     })
